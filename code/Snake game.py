@@ -158,6 +158,33 @@ def game_over():
     # Creiamo un testo sul canvas con il messaggio "GAME OVER" in rosso
     canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2,
                        font=('consolas',70), text="GAME OVER", fill="red", tag="gameover")
+    # Abilitiamo il pulsante di restart
+    button.config(state=NORMAL)
+    # Ridimensioniamo il canvas in modo che il pulsante sia visibile
+    canvas.config(height=GAME_HEIGHT - SPACE_SIZE) 
+    
+
+
+# Definiamo una funzione restart che resetta il gioco
+def restart():
+    # Disabilitiamo il pulsante di restart
+    button.config(state=DISABLED)
+    # Resetiamo il punteggio a zero e la direzione a 'down'
+    global score, direction
+    score = 0
+    direction = 'down'
+    # Aggiorniamo il testo dell'etichetta con il punteggio
+    label.config(text="Score:{}".format(score))
+     # Eliminiamo il testo "GAME OVER" dal canvas quando fai restart
+    canvas.delete("gameover") 
+    # Creiamo un'istanza della classe Snake e una della classe Food
+    snake = Snake()
+    food = Food()
+    # Chiamiamo la funzione next_turn per iniziare il gioco, passando come argomenti il serpente e il cibo
+    next_turn(snake, food)
+
+
+
 
 # Creiamo una finestra con il titolo "Snake game" e la rendiamo non ridimensionabile
 window = Tk()
@@ -199,6 +226,15 @@ window.bind('<Left>', lambda event: change_direction('left'))
 window.bind('<Right>', lambda event: change_direction('right'))
 window.bind('<Up>', lambda event: change_direction('up'))
 window.bind('<Down>', lambda event: change_direction('down'))
+
+
+# Creiamo un pulsante sulla finestra con il testo "Restart" e la funzione restart come comando
+button = Button(window, text="Restart", command=restart)
+# Disabilitiamo il pulsante all'inizio del gioco
+button.config(state=DISABLED)
+# Posizioniamo il pulsante sotto l'etichetta del punteggio
+button.pack()
+
 
 # Creiamo un'istanza della classe Snake e una della classe Food
 snake = Snake()
