@@ -44,6 +44,13 @@ class Food:
 
         # Memorizziamo le coordinate del cibo in un attributo della classe
         self.coordinates = [x, y]
+         #  Condizione che controlla se le coordinate del cibo sono già occupate dal serpente
+        while self.coordinates in snake.coordinates: # se le coordinate del cibo sono nella lista delle coordinate del serpente
+            # Generiamo una nuova posizione casuale per il cibo
+            x = random.randint(0, (GAME_WIDTH / SPACE_SIZE)-1) * SPACE_SIZE
+            y = random.randint(0, (GAME_HEIGHT / SPACE_SIZE) - 1) * SPACE_SIZE
+            # Aggiorniamo le coordinate del cibo con la nuova posizione
+            self.coordinates = [x, y]
 
         # Creiamo un cerchio sul canvas con il colore e il tag del cibo
         canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=FOOD_COLOR, tag="food")
